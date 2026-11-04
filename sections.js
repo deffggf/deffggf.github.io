@@ -5,7 +5,7 @@
 const ABOUT = {
   text: ['Write a few sentences about yourself here.',
          'Tell what you build, what you design and what you are learning.'],
-  facts: [['Focus', 'Development & web design'], ['Location', 'Poznan'], ['VS Code, Figma']]
+  facts: [['Focus', 'Development & web design'], ['Location', 'Poznan'], ['Tools', 'VS Code, Figma'], ['Languages', 'English, Polish, Russian']]
 };
 // Чтобы добавить проект — скопируйте блок { ... }, вставьте после него (с запятой) и поменяйте поля:
 //  title / text    — название и короткая подпись на карточке
@@ -40,9 +40,9 @@ const DESIGN = [
     description: 'Write the concept description here.', images: [], links: [] }
 ];
 const CONTACT = [
-  ['Email',    'you@example.com', 'mak.dgoy.99@gmail.com'],
-  ['Telegram', '@username',       'https://t.me/Dwffgg'],
-  ['Discord',  'username',        'https://discord.com/users/1378496626754060330'],
+  ['Email',    'mak.dgoy.99@gmail.com', 'mak.dgoy.99@gmail.com'],
+  ['Telegram', '@Dwffgg',       'https://t.me/Dwffgg'],
+  ['Discord',  'deffggf',        'https://discord.com/users/1378496626754060330'],
   ['GitHub',   'deffggf',         'https://github.com/deffggf']
 ];
 
