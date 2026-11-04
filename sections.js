@@ -5,26 +5,44 @@
 const ABOUT = {
   text: ['Write a few sentences about yourself here.',
          'Tell what you build, what you design and what you are learning.'],
-  facts: [['Focus', 'Development & web design'], ['Location', 'Your city'], ['Tools', 'Your tools']]
+  facts: [['Focus', 'Development & web design'], ['Location', 'Poznan'], ['VS Code, Figma']]
 };
-// Чтобы добавить проект — скопируйте строку и поменяйте. url — ссылка (можно оставить ''),
-// image — путь к картинке превью (если пусто, показывается заглушка).
+// Чтобы добавить проект — скопируйте блок { ... }, вставьте после него (с запятой) и поменяйте поля:
+//  title / text    — название и короткая подпись на карточке
+//  image           — превью на карточке, например 'images/bot-cover.png' (пусто '' = заглушка)
+//  description     — подробное описание в окне; \n = новый абзац
+//  images          — дополнительные картинки в окне: ['images/bot-1.png', 'images/bot-2.png']
+//  links           — кнопки в окне, например:
+//    { label: 'Telegram bot', url: 'https://t.me/your_bot' },
+//    { label: 'Discord bot',  url: 'https://discord.com/oauth2/authorize?client_id=...' },
+//    { label: 'GitHub',       url: 'https://github.com/deffggf/repo' }
 const PROGRAMMING = [
-  { title: 'Project one',   text: 'Short description of the project.', url: '', image: '' },
-  { title: 'Project two',   text: 'Short description of the project.', url: '', image: '' },
-  { title: 'Project three', text: 'Short description of the project.', url: '', image: '' },
-  { title: 'Project four',  text: 'Short description of the project.', url: '', image: '' }
+  { title: 'Project one', text: 'Short description of the project.', image: '',
+    description: 'Write a longer description of the project here.\nAdd a second paragraph like this.',
+    images: [], links: [] },
+  { title: 'Project two', text: 'Short description of the project.', image: '',
+    description: 'Write a longer description of the project here.', images: [], links: [] },
+  { title: 'Project three', text: 'Short description of the project.', image: '',
+    description: 'Write a longer description of the project here.', images: [], links: [] },
+  { title: 'Project four', text: 'Short description of the project.', image: '',
+    description: 'Write a longer description of the project here.', images: [], links: [] }
 ];
+// Проекты веб-дизайна — поля такие же, как у PROGRAMMING выше.
 const DESIGN = [
-  { title: 'Design one',   text: 'Short description of the concept.', url: '', image: '' },
-  { title: 'Design two',   text: 'Short description of the concept.', url: '', image: '' },
-  { title: 'Design three', text: 'Short description of the concept.', url: '', image: '' },
-  { title: 'Design four',  text: 'Short description of the concept.', url: '', image: '' }
+  { title: 'Design one', text: 'Short description of the concept.', image: '',
+    description: 'Write the concept description here.\nWhat was the task and what tools did you use.',
+    images: [], links: [] },
+  { title: 'Design two', text: 'Short description of the concept.', image: '',
+    description: 'Write the concept description here.', images: [], links: [] },
+  { title: 'Design three', text: 'Short description of the concept.', image: '',
+    description: 'Write the concept description here.', images: [], links: [] },
+  { title: 'Design four', text: 'Short description of the concept.', image: '',
+    description: 'Write the concept description here.', images: [], links: [] }
 ];
 const CONTACT = [
-  ['Email',    'you@example.com', 'mailto:you@example.com'],
-  ['Telegram', '@username',       'https://t.me/username'],
-  ['Discord',  'username',        'https://discord.com/users/YOUR_ID'],
+  ['Email',    'you@example.com', 'mak.dgoy.99@gmail.com'],
+  ['Telegram', '@username',       'https://t.me/Dwffgg'],
+  ['Discord',  'username',        'https://discord.com/users/1378496626754060330'],
   ['GitHub',   'deffggf',         'https://github.com/deffggf']
 ];
 
@@ -41,10 +59,8 @@ function ph(kind, i) {
 }
 function cards(list, kind) {
   return list.map((p, i) => {
-    const tag = p.url ? 'a' : 'div';
-    const at = p.url ? ` href="${p.url}" target="_blank" rel="noopener"` : '';
     const pv = p.image ? `<img src="${p.image}" alt="${p.title}">` : ph(kind, i);
-    return `<${tag} class="card"${at}><div class="prev">${pv}</div><h3>${p.title}</h3><p>${p.text}</p></${tag}>`;
+    return `<div class="card" role="button" tabindex="0" data-k="${kind}" data-i="${i}"><div class="prev">${pv}</div><h3>${p.title}</h3><p>${p.text}</p></div>`;
   }).join('');
 }
 function projects(id, label, title, list, kind, allHref) {
@@ -227,6 +243,51 @@ layer(document.querySelector('#about .bg'), [codeMk], .6);
 layer(document.querySelector('#programming .bg'), [editorMk, termMk, codeMk], .7);
 layer(document.querySelector('#web-design .bg'), [wireMk, designMk], .7);
 
+/* ================= Окно проекта ================= */
+const modal = document.createElement('div');
+modal.className = 'modal';
+modal.innerHTML = `<div class="m-box" role="dialog" aria-modal="true"><button class="m-x" aria-label="Close">${chev('M6 6l12 12M18 6L6 18')}</button><div class="m-body"></div></div>`;
+document.body.appendChild(modal);
+const mBody = modal.querySelector('.m-body'), mX = modal.querySelector('.m-x');
+let lastFocus = null;
+function openProject(kind, i) {
+  const p = (kind === 'code' ? PROGRAMMING : DESIGN)[i];
+  const imgs = [p.image, ...(p.images || [])].filter(Boolean);
+  const main = imgs.length ? `<img class="m-main" src="${imgs[0]}" alt="${p.title}">` : `<div class="m-main m-ph">${ph(kind, i)}</div>`;
+  const thumbs = imgs.length > 1 ? `<div class="m-th">${imgs.map((s, k) => `<button class="${k ? '' : 'on'}" data-s="${s}" aria-label="Image ${k + 1}"><img src="${s}" alt=""></button>`).join('')}</div>` : '';
+  const desc = (p.description || p.text).split('\n').filter(Boolean).map(t => `<p>${t}</p>`).join('');
+  const links = (p.links || []).filter(l => l.url).map((l, k) =>
+    `<a class="m-l${k ? '' : ' pri'}" href="${l.url}" target="_blank" rel="noopener">${l.label}${chev('M7 17L17 7M8 7h9v9')}</a>`).join('');
+  mBody.innerHTML = `${main}${thumbs}<h3>${p.title}</h3>${desc}${links ? `<div class="m-ls">${links}</div>` : ''}`;
+  lastFocus = document.activeElement;
+  modal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  modal.querySelector('.m-box').scrollTop = 0;
+  mX.focus();
+}
+function closeProject() {
+  modal.classList.remove('open');
+  document.body.style.overflow = '';
+  if (lastFocus) lastFocus.focus();
+}
+document.addEventListener('click', e => {
+  const c = e.target.closest('.card');
+  if (c) return openProject(c.dataset.k, +c.dataset.i);
+  const t = e.target.closest('.m-th button');
+  if (t) {
+    mBody.querySelector('.m-main').src = t.dataset.s;
+    mBody.querySelectorAll('.m-th button').forEach(b => b.classList.toggle('on', b === t));
+    return;
+  }
+  if (e.target === modal || e.target.closest('.m-x')) closeProject();
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && modal.classList.contains('open')) closeProject();
+  if ((e.key === 'Enter' || e.key === ' ') && e.target.classList && e.target.classList.contains('card')) {
+    e.preventDefault(); openProject(e.target.dataset.k, +e.target.dataset.i);
+  }
+});
+
 /* ================= Лента проектов ================= */
 document.querySelectorAll('.car').forEach(sec => {
   const tr = sec.querySelector('.track'), [pv, nx] = sec.querySelectorAll('.arrow');
@@ -263,4 +324,17 @@ const heroBtn = document.querySelector('.hero .btn');
 if (heroBtn) heroBtn.setAttribute('href', '#programming');
 const hint = document.querySelector('.hero .scroll');
 if (hint) hint.addEventListener('click', () => document.getElementById('about').scrollIntoView());
+})();
+
+/* Кнопка «наверх» */
+(function () {
+  const b = document.createElement('button');
+  b.className = 'to-top';
+  b.setAttribute('aria-label', 'Back to top');
+  b.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15l6-6 6 6"/></svg>';
+  document.body.appendChild(b);
+  const upd = () => b.classList.toggle('show', scrollY > innerHeight * 0.6);
+  addEventListener('scroll', upd, { passive: true });
+  upd();
+  b.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
 })();

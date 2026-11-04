@@ -66,3 +66,36 @@ a.card:hover .prev{border-color:rgba(77,141,255,.6)}
   .tools{width:100%}
   .all{margin-right:auto}
 }
+
+/* Кнопка «наверх» */
+.to-top{position:fixed;right:24px;bottom:24px;z-index:40;width:48px;height:48px;border-radius:50%;border:1px solid var(--line);background:rgba(8,9,12,.7);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);color:var(--ink);display:grid;place-items:center;cursor:pointer;opacity:0;transform:translateY(12px);pointer-events:none;transition:opacity .4s,transform .4s,border-color .3s,color .3s}
+.to-top.show{opacity:1;transform:none;pointer-events:auto}
+.to-top:hover{border-color:var(--accent);color:var(--accent)}
+.to-top svg{width:18px;height:18px}
+@media (max-width:767px){.to-top{right:16px;bottom:16px}}
+
+/* Окно проекта */
+.card{cursor:pointer}
+.card:hover .prev,.card:focus-visible .prev{border-color:rgba(77,141,255,.6)}
+.modal{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;padding:24px;background:rgba(8,9,12,.82);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);opacity:0;visibility:hidden;transition:opacity .35s,visibility .35s}
+.modal.open{opacity:1;visibility:visible}
+.m-box{position:relative;width:100%;max-width:860px;max-height:90vh;overflow-y:auto;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:32px;transform:translateY(16px);transition:transform .4s cubic-bezier(.22,1,.36,1)}
+.modal.open .m-box{transform:none}
+.m-x{position:absolute;top:14px;right:14px;z-index:2;width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:rgba(8,9,12,.7);color:var(--ink);display:grid;place-items:center;cursor:pointer;transition:border-color .3s}
+.m-x:hover{border-color:var(--accent)}
+.m-x svg{width:18px;height:18px}
+.m-main{display:block;width:100%;aspect-ratio:16/10;object-fit:cover;border:1px solid var(--line);border-radius:12px;background:var(--bg)}
+.m-ph{position:relative;overflow:hidden}
+.m-th{display:flex;gap:10px;margin-top:12px;overflow-x:auto}
+.m-th button{flex:0 0 88px;aspect-ratio:16/10;padding:0;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:none;cursor:pointer;opacity:.55;transition:opacity .3s,border-color .3s}
+.m-th button.on,.m-th button:hover{opacity:1;border-color:var(--accent)}
+.m-th img{width:100%;height:100%;object-fit:cover;display:block}
+.m-box h3{margin-top:28px;font-size:28px;font-weight:600;letter-spacing:-.02em}
+.m-box p{margin-top:14px;max-width:640px;line-height:1.7;color:var(--muted)}
+.m-ls{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.m-l{display:inline-flex;align-items:center;gap:10px;height:44px;padding:0 22px;border-radius:999px;border:1px solid var(--line);font-size:14px;transition:border-color .3s,background .3s,color .3s}
+.m-l svg{width:16px;height:16px}
+.m-l:hover{border-color:var(--accent)}
+.m-l.pri{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.m-l.pri:hover{background:var(--accent);border-color:var(--accent);color:var(--ink)}
+@media (max-width:767px){.modal{padding:12px}.m-box{padding:16px;max-height:92vh}.m-box h3{font-size:24px}}
