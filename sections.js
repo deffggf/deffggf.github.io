@@ -3,8 +3,9 @@
 
 /* ================= ВАШИ ДАННЫЕ — редактируйте здесь ================= */
 const ABOUT = {
-  text: ['Write a few sentences about yourself here.',
-         'Tell what you build, what you design and what you are learning.'],
+  text: ['I\'m an aspiring developer and web designer with a passion for technology and creativity.',
+         'I enjoy building digital projects, exploring new technologies and experimenting with different ideas. I\'m constantly learning, improving my skills and turning concepts into real projects.',
+         'This portfolio is a place where I share my work, experiments and progress.'],
   facts: [['Focus', 'Development & web design'], ['Location', 'Poznan'], ['Tools', 'VS Code, Figma'], ['Languages', 'English, Polish, Russian']]
 };
 // Чтобы добавить проект — скопируйте блок { ... }, вставьте после него (с запятой) и поменяйте поля:
