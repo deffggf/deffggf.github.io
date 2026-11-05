@@ -30,18 +30,16 @@ const PROGRAMMING = [
 ];
 // Проекты веб-дизайна — поля такие же, как у PROGRAMMING выше.
 const DESIGN = [
-  { title: 'Design one', text: 'Short description of the concept.', image: '',
-    description: 'Write the concept description here.\nWhat was the task and what tools did you use.',
-    images: [], links: [] },
+  { title: 'Foundation Dobro', text: 'Dobro Charitable Foundation.', image: 'images/design/foundation-logo.png',
+    description: 'This is a website concept for the Dobro Charitable Foundation, which I created during a web design course.\nUsed Figma for design.',
+    images: ['images/design/foundation-site.png'], links: [] },
   { title: 'Design two', text: 'Short description of the concept.', image: '',
     description: 'Write the concept description here.', images: [], links: [] },
   { title: 'Design three', text: 'Short description of the concept.', image: '',
     description: 'Write the concept description here.', images: [], links: [] },
-  { title: 'Design four', text: 'Short description of the concept.', image: '',
-    description: 'Write the concept description here.', images: [], links: [] }
 ];
 const CONTACT = [
-  ['Email',    'mak.dgoy.99@gmail.com', 'mak.dgoy.99@gmail.com'],
+  ['Email',    'mak.dgoy.99@gmail.com', 'mailto:mak.dgoy.99@gmail.com'],
   ['Telegram', '@Dwffgg',       'https://t.me/Dwffgg'],
   ['Discord',  'deffggf',        'https://discord.com/users/1378496626754060330'],
   ['GitHub',   'deffggf',         'https://github.com/deffggf']
