@@ -33,9 +33,9 @@ const DESIGN = [
   { title: 'Foundation Dobro', text: 'Dobro Charitable Foundation.', image: 'images/design/foundation/foundation-logo.png',
     description: 'This is a website concept for the Dobro Charitable Foundation, which I created during a web design course.\nUsed Figma for design.',
     images: ['images/design/foundation/foundation-site.png'], links: [] },
-  { title: 'remake Paycompass', text: 'Concept for a redesign of Paycompass.', image:'"images/design/paycompass/paycompass-logo.png"',
+  { title: 'remake Paycompass', text: 'Concept for a redesign of Paycompass.', image:'images/design/paycompass/paycompass-logo.png',
     description: 'Concept for a redesign of Paycompass. \nP.S. This concept was created in 2024, bafore Paycompass introduced its new design.', images: ['images/design/paycompass/paycompass.png'], links: ['https://paycompass.com'] },
-  { title: 'TapCoin', text: 'This is a concept for the TapCoin project.', image: '"images/design/click/click-logo.png"',
+  { title: 'TapCoin', text: 'This is a concept for the TapCoin project.', image: 'images/design/click/click-logo.png',
     description: 'This is a concept for the TapCoin project.', images: ['images/design/click/click.png'], links: [] },
 ];
 const CONTACT = [
