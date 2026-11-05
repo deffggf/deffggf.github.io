@@ -30,9 +30,9 @@ const PROGRAMMING = [
 ];
 // Проекты веб-дизайна — поля такие же, как у PROGRAMMING выше.
 const DESIGN = [
-  { title: 'Foundation Dobro', text: 'Dobro Charitable Foundation.', image: 'images/design/foundation-logo.png',
+  { title: 'Foundation Dobro', text: 'Dobro Charitable Foundation.', image: 'images/design/foundation/foundation-logo.png',
     description: 'This is a website concept for the Dobro Charitable Foundation, which I created during a web design course.\nUsed Figma for design.',
-    images: ['images/design/foundation-site.png'], links: [] },
+    images: ['images/design/foundation/foundation-site.png'], links: [] },
   { title: 'Design two', text: 'Short description of the concept.', image: '',
     description: 'Write the concept description here.', images: [], links: [] },
   { title: 'Design three', text: 'Short description of the concept.', image: '',
