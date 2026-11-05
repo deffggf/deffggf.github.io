@@ -252,7 +252,7 @@ let lastFocus = null;
 function openProject(kind, i) {
   const p = (kind === 'code' ? PROGRAMMING : DESIGN)[i];
   const imgs = [p.image, ...(p.images || [])].filter(Boolean);
-  const main = imgs.length ? `<img class="m-main" src="${imgs[0]}" alt="${p.title}">` : `<div class="m-main m-ph">${ph(kind, i)}</div>`;
+  const main = imgs.length ? `<div class="m-main m-shot"><img src="${imgs[0]}" alt="${p.title}"></div>` : `<div class="m-main m-ph">${ph(kind, i)}</div>`;
   const thumbs = imgs.length > 1 ? `<div class="m-th">${imgs.map((s, k) => `<button class="${k ? '' : 'on'}" data-s="${s}" aria-label="Image ${k + 1}"><img src="${s}" alt=""></button>`).join('')}</div>` : '';
   const desc = (p.description || p.text).split('\n').filter(Boolean).map(t => `<p>${t}</p>`).join('');
   const links = (p.links || []).filter(l => l.url).map((l, k) =>
@@ -274,7 +274,7 @@ document.addEventListener('click', e => {
   if (c) return openProject(c.dataset.k, +c.dataset.i);
   const t = e.target.closest('.m-th button');
   if (t) {
-    mBody.querySelector('.m-main').src = t.dataset.s;
+    mBody.querySelector('.m-shot img').src = t.dataset.s; mBody.querySelector('.m-shot').scrollTop = 0;
     mBody.querySelectorAll('.m-th button').forEach(b => b.classList.toggle('on', b === t));
     return;
   }
