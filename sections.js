@@ -1,49 +1,14 @@
 (function () {
 'use strict';
 
-/* ================= ВАШИ ДАННЫЕ — редактируйте здесь ================= */
-const ABOUT = {
-  text: ['I\'m an aspiring developer and web designer with a passion for technology and creativity.',
-         'I enjoy building digital projects, exploring new technologies and experimenting with different ideas. I\'m constantly learning, improving my skills and turning concepts into real projects.',
-         'This portfolio is a place where I share my work, experiments and progress.'],
-  facts: [['Focus', 'Development & web design'], ['Location', 'Poznan'], ['Tools', 'VS Code, Figma'], ['Languages', 'English, Polish, Russian']]
+/* Данные берутся из data.js */
+if (!window.SITE_DATA) { console.error('data.js не подключён: добавьте <script src="data.js"></script> перед sections.js'); return; }
+const { ABOUT, PROGRAMMING, DESIGN, CONTACT } = window.SITE_DATA;
+const PAGE = document.body.dataset.page || 'home';   // home | programming | web-design
+const PAGES = {
+  programming:  { kind: 'code',   list: PROGRAMMING, label: 'PROGRAMMING', title: 'All projects.', text: 'Bots, tools and experiments I’ve built.' },
+  'web-design': { kind: 'design', list: DESIGN,      label: 'WEB DESIGN',  title: 'All designs.',  text: 'Website designs, interfaces and concepts.' }
 };
-// Чтобы добавить проект — скопируйте блок { ... }, вставьте после него (с запятой) и поменяйте поля:
-//  title / text    — название и короткая подпись на карточке
-//  image           — превью на карточке, например 'images/bot-cover.png' (пусто '' = заглушка)
-//  description     — подробное описание в окне; \n = новый абзац
-//  images          — дополнительные картинки в окне: ['images/bot-1.png', 'images/bot-2.png']
-//  links           — кнопки в окне, например:
-//    { label: 'Telegram bot', url: 'https://t.me/your_bot' },
-//    { label: 'Discord bot',  url: 'https://discord.com/oauth2/authorize?client_id=...' },
-//    { label: 'GitHub',       url: 'https://github.com/deffggf/repo' }
-const PROGRAMMING = [
-  { title: 'Project one', text: 'Short description of the project.', image: '',
-    description: 'Write a longer description of the project here.\nAdd a second paragraph like this.',
-    images: [], links: [] },
-  { title: 'Project two', text: 'Short description of the project.', image: '',
-    description: 'Write a longer description of the project here.', images: [], links: [] },
-  { title: 'Project three', text: 'Short description of the project.', image: '',
-    description: 'Write a longer description of the project here.', images: [], links: [] },
-  { title: 'Project four', text: 'Short description of the project.', image: '',
-    description: 'Write a longer description of the project here.', images: [], links: [] }
-];
-// Проекты веб-дизайна — поля такие же, как у PROGRAMMING выше.
-const DESIGN = [
-  { title: 'Foundation Dobro', text: 'Dobro Charitable Foundation.', image: 'images/design/foundation/foundation-logo.png',
-    description: 'This is a website concept for the Dobro Charitable Foundation, which I created during a web design course.\nUsed Figma for design.',
-    images: ['images/design/foundation/foundation-site.png'], links: [] },
-  { title: 'remake Paycompass', text: 'Concept for a redesign of Paycompass.', image:'images/design/paycompass/paycompass-logo.png',
-    description: 'Concept for a redesign of Paycompass. \nP.S. This concept was created in 2024, bafore Paycompass introduced its new design.', images: ['images/design/paycompass/paycompass.png'], links: ['https://paycompass.com'] },
-  { title: 'TapCoin', text: 'This is a concept for the TapCoin project.', image: 'images/design/click/click-logo.png',
-    description: 'This is a concept for the TapCoin project.', images: ['images/design/click/click.png'], links: [] },
-];
-const CONTACT = [
-  ['Email',    'mak.dgoy.99@gmail.com', 'mailto:mak.dgoy.99@gmail.com'],
-  ['Telegram', '@Dwffgg',       'https://t.me/Dwffgg'],
-  ['Discord',  'deffggf',        'https://discord.com/users/1378496626754060330'],
-  ['GitHub',   'deffggf',         'https://github.com/deffggf']
-];
 
 /* ================= Разметка секций ================= */
 const chev = d => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="${d}"/></svg>`;
@@ -77,16 +42,29 @@ const about = `<section class="sec" id="about"><div class="bg"></div><div class=
 const contact = `<section class="sec" id="contact"><div class="in-w" style="padding-bottom:120px">
   <p class="label rv">CONTACT</p><h2 class="big rv" style="--d:100ms">Let’s connect.</h2>
   <div class="cl rv" style="--d:200ms">${CONTACT.map(([n, v, u]) =>
-    `<a href="${u}"${u.startsWith('mailto') ? '' : ' target="_blank" rel="noopener"'}>${n}<span>${v}</span></a>`).join('')}</div>
+    `<a href="${u}"${u.startsWith('mailto') ? ` data-copy="${v}"` : ' target="_blank" rel="noopener"'}>${n}<span>${v}</span></a>`).join('')}</div>
 </div></section>`;
 
-const hero = document.querySelector('main.hero');
-hero.id = 'top';
-hero.insertAdjacentHTML('afterend',
-  about +
-  projects('programming', 'PROGRAMMING', 'Things I’ve built.', PROGRAMMING, 'code', 'programming.html') +
-  projects('web-design', 'WEB DESIGN', 'Interfaces I’ve designed.', DESIGN, 'design', 'web-design.html') +
-  contact);
+if (PAGE === 'home') {
+  const hero = document.querySelector('main.hero');
+  hero.id = 'top';
+  hero.insertAdjacentHTML('afterend',
+    about +
+    projects('programming', 'PROGRAMMING', 'Things I’ve built.', PROGRAMMING, 'code', 'programming.html') +
+    projects('web-design', 'WEB DESIGN', 'Interfaces I’ve designed.', DESIGN, 'design', 'web-design.html') +
+    contact);
+} else {
+  const pg = PAGES[PAGE];
+  document.querySelector('main').innerHTML = `<section class="sec pg"><div class="bg"></div><div class="in-w">
+    <a class="back rv" href="index.html">${chev('M15 6l-6 6 6 6')}Back to home</a>
+    <p class="label rv" style="--d:80ms">${pg.label}</p>
+    <h1 class="rv" style="--d:140ms">${pg.title}</h1>
+    <p class="lead rv" style="--d:200ms">${pg.text}</p>
+    <div class="grid">${cards(pg.list, pg.kind)}</div></div></section>`;
+  document.querySelectorAll('.pg .card').forEach((c, i) => { c.classList.add('rv'); c.style.setProperty('--d', (i % 3) * 90 + 'ms'); });
+  const bt = document.getElementById('burger'), ln = document.getElementById('links');
+  bt.addEventListener('click', () => { const o = ln.classList.toggle('open'); bt.setAttribute('aria-expanded', o); });
+}
 
 /* ================= Фоновая графика (Canvas) ================= */
 const MONO = 'ui-monospace,SFMono-Regular,Menlo,Consolas,monospace';
@@ -238,9 +216,13 @@ function layer(host, makers, fill) {
     if (on && !reduced) raf = requestAnimationFrame(frame);
   }).observe(host);
 }
-layer(document.querySelector('#about .bg'), [codeMk], .6);
-layer(document.querySelector('#programming .bg'), [editorMk, termMk, codeMk], .7);
-layer(document.querySelector('#web-design .bg'), [wireMk, designMk], .7);
+if (PAGE === 'home') {
+  layer(document.querySelector('#about .bg'), [codeMk], .6);
+  layer(document.querySelector('#programming .bg'), [editorMk, termMk, codeMk], .7);
+  layer(document.querySelector('#web-design .bg'), [wireMk, designMk], .7);
+} else {
+  layer(document.querySelector('.pg .bg'), PAGE === 'programming' ? [editorMk, termMk, codeMk] : [wireMk, designMk], .7);
+}
 
 /* ================= Окно проекта ================= */
 const modal = document.createElement('div');
@@ -303,6 +285,7 @@ const io = new IntersectionObserver(es => es.forEach(e => {
 }), { threshold: .15 });
 document.querySelectorAll('.rv').forEach(el => io.observe(el));
 
+if (PAGE === 'home') {
 /* ================= Меню: ссылки на секции + подсветка ================= */
 const MAP = { Home: 'top', About: 'about', Programming: 'programming', 'Web Design': 'web-design', Contact: 'contact' };
 const navLinks = [...document.querySelectorAll('.links a')];
@@ -323,6 +306,7 @@ const heroBtn = document.querySelector('.hero .btn');
 if (heroBtn) heroBtn.setAttribute('href', '#programming');
 const hint = document.querySelector('.hero .scroll');
 if (hint) hint.addEventListener('click', () => document.getElementById('about').scrollIntoView());
+}
 })();
 
 /* Кнопка «наверх» */
@@ -337,3 +321,24 @@ if (hint) hint.addEventListener('click', () => document.getElementById('about').
   upd();
   b.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
 })();
+
+/* Копирование почты по клику */
+document.addEventListener('click', e => {
+  const a = e.target.closest('a[data-copy]');
+  if (!a) return;
+  e.preventDefault();
+  const text = a.dataset.copy, span = a.querySelector('span');
+  const old = span.dataset.o || (span.dataset.o = span.textContent);
+  const done = () => {
+    span.textContent = 'Copied ✓';
+    span.style.color = 'var(--accent)';
+    setTimeout(() => { span.textContent = old; span.style.color = ''; }, 1600);
+  };
+  const fallback = () => {
+    const t = document.createElement('textarea');
+    t.value = text; document.body.appendChild(t); t.select();
+    try { document.execCommand('copy'); } catch (_) {}
+    t.remove(); done();
+  };
+  navigator.clipboard ? navigator.clipboard.writeText(text).then(done, fallback) : fallback();
+});

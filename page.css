@@ -1,0 +1,28 @@
+/* Базовые стили и шапка для страниц programming.html и web-design.html */
+:root{--bg:#08090C;--surface:#101218;--ink:#FFFFFF;--muted:#9298A5;--accent:#4D8DFF;--line:#252832}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--ink);font-family:Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+ul{list-style:none}
+header{position:fixed;inset:0 0 auto 0;z-index:50;background:rgba(8,9,12,.7);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(37,40,50,.6)}
+nav{max-width:1400px;margin:0 auto;height:64px;padding:0 48px;display:flex;align-items:center;justify-content:space-between}
+.brand{font-family:ui-monospace,Menlo,Consolas,monospace;font-weight:500;font-size:16px}
+.brand span{color:var(--accent)}
+.links{display:flex;gap:36px}
+.links a{position:relative;font-size:14px;color:var(--muted);padding:4px 0;transition:color .3s}
+.links a::after{content:"";position:absolute;left:0;bottom:-2px;height:1px;width:0;background:var(--line);transition:width .3s}
+.links a:hover{color:var(--ink)}
+.links a:hover::after{width:100%}
+.links a.active{color:var(--ink)}
+.links a.active::after{width:100%;background:var(--accent)}
+.burger{display:none;background:none;border:0;color:var(--ink);width:44px;height:44px;margin-right:-10px;cursor:pointer}
+.burger svg{width:22px;height:22px}
+@media (max-width:767px){
+  nav{padding:0 24px}
+  .burger{display:flex;align-items:center;justify-content:center}
+  .links{display:none;position:absolute;top:64px;left:0;right:0;flex-direction:column;gap:0;padding:12px 24px;background:var(--bg);border-top:1px solid rgba(37,40,50,.6);border-bottom:1px solid rgba(37,40,50,.6)}
+  .links.open{display:flex}
+  .links a{font-size:18px;padding:14px 0}
+  .links a::after{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important}}
